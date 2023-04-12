@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "email": "lizka@mail.ru",
+        "login": "lizka",
+        "name": "Liza",
+        "birthday": "1998-11-06"
+    },
+    {
+        "id": 2,
+        "email": "rodivonum@mail.ru",
+        "login": "rodivonum",
+        "name": "Rodion",
+        "birthday": "1997-04-21"
+    }
+]
