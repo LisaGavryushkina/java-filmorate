@@ -4,13 +4,15 @@
         "name": "Авиатор",
         "description": "История о военном летчике",
         "releaseDate": "2002-12-20",
-        "duration": 160
+        "duration": 160,
+        "likes": []
     },
     {
         "id": 2,
         "name": "Тренер Картер",
         "description": "История о тренере по баскетболу",
         "releaseDate": "2005-12-20",
-        "duration": 130
+        "duration": 130,
+        "likes": []
     }
 ]

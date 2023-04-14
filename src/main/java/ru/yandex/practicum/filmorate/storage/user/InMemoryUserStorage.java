@@ -1,0 +1,96 @@
+package ru.yandex.practicum.filmorate.storage.user;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Component;
+
+import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
+import ru.yandex.practicum.filmorate.model.User;
+
+@Component
+public class InMemoryUserStorage implements UserStorage {
+
+    private final Map<Integer, User> users = new ConcurrentHashMap<>();
+    private int id;
+
+    private int createId() {
+        return ++id;
+    }
+
+
+    @Override
+    public User add(User user) {
+        user.setId(createId());
+        users.put(user.getId(), user);
+        return user;
+    }
+
+
+    @Override
+    public User update(User user) {
+        if (users.containsKey(user.getId())) {
+            users.put(user.getId(), user);
+            return user;
+        }
+        throw new UserNotFoundException(id);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return new ArrayList<>(users.values());
+    }
+
+    @Override
+    public void clear() {
+        users.clear();
+        id = 0;
+    }
+
+    @Override
+    public User getUser(int id) {
+        return Optional.ofNullable(users.get(id)).orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    @Override
+    public void addFriend(int userId, int friendId) {
+        User user = getUser(userId);
+        User friend = getUser(friendId);
+        user.addFriend(friendId);
+        friend.addFriend(userId);
+    }
+
+    @Override
+    public void deleteFriend(int userId, int friendId) {
+        User user = getUser(userId);
+        User friend = getUser(friendId);
+        user.deleteFriend(friendId);
+        friend.deleteFriend(userId);
+    }
+
+    @Override
+    public List<User> getAllFriends(int userId) {
+        Set<Integer> userFriends = getUser(userId).getAllFriends();
+
+        return userFriends.stream()
+                .map(users::get)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> getAllCommonFriends(int userId, int otherId) {
+        Set<Integer> userFriends = getUser(userId).getAllFriends();
+        Set<Integer> otherUserFriends = getUser(otherId).getAllFriends();
+
+        return userFriends.stream()
+                .filter(otherUserFriends::contains)
+                .map(users::get)
+                .collect(Collectors.toList());
+    }
+
+}
