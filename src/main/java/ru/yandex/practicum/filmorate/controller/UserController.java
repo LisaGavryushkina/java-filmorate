@@ -1,9 +1,9 @@
 package ru.yandex.practicum.filmorate.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.validation.Valid;
 
@@ -23,7 +23,7 @@ import ru.yandex.practicum.filmorate.model.User;
 @Slf4j
 public class UserController {
 
-    private final Map<Integer, User> users = new HashMap<>();
+    private final Map<Integer, User> users = new ConcurrentHashMap<>();
     private int id;
 
     private int createId() {

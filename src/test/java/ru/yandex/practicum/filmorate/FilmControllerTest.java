@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 
@@ -42,12 +43,10 @@ public class FilmControllerTest {
         controller.clear();
     }
 
-    private static String getJson(String name) {
+    private static String getJson(String name) throws IOException {
 
         try (InputStream resourceAsStream = requireNonNull(FilmControllerTest.class.getResourceAsStream(name))) {
             return new String(resourceAsStream.readAllBytes());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
