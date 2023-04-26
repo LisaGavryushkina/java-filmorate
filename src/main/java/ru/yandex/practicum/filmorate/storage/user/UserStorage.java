@@ -20,7 +20,7 @@ public interface UserStorage {
 
     List<User> getAllCommonFriends(int userId, int otherId);
 
-    void addFriend(int userId, int friendId);
+    User addFriend(int userId, int friendId);
 
-    void deleteFriend(int userId, int friendId);
+    User deleteFriend(int userId, int friendId);
 }

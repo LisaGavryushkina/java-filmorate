@@ -2,10 +2,10 @@ package ru.yandex.practicum.filmorate.storage.film;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
-    private final Map<Integer, Film> films = new ConcurrentHashMap<>();
+    private final Map<Integer, Film> films = new HashMap<>();
     private int id;
 
     private int createId() {
@@ -68,12 +68,16 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public void addLike(int filmId, int userId) {
-        getFilm(filmId).addLike(userId);
+    public Film addLike(int filmId, int userId) {
+        Film film = getFilm(filmId);
+        film.addLike(userId);
+        return film;
     }
 
     @Override
-    public void deleteLike(int filmId, int userId) {
-        getFilm(filmId).deleteLike(userId);
+    public Film deleteLike(int filmId, int userId) {
+        Film film = getFilm(filmId);
+        film.deleteLike(userId);
+        return film;
     }
 }

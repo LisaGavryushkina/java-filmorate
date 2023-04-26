@@ -1,11 +1,11 @@
 package ru.yandex.practicum.filmorate.storage.user;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -16,7 +16,7 @@ import ru.yandex.practicum.filmorate.model.User;
 @Component
 public class InMemoryUserStorage implements UserStorage {
 
-    private final Map<Integer, User> users = new ConcurrentHashMap<>();
+    private final Map<Integer, User> users = new HashMap<>();
     private int id;
 
     private int createId() {
@@ -58,19 +58,21 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public void addFriend(int userId, int friendId) {
+    public User addFriend(int userId, int friendId) {
         User user = getUser(userId);
         User friend = getUser(friendId);
         user.addFriend(friendId);
         friend.addFriend(userId);
+        return user;
     }
 
     @Override
-    public void deleteFriend(int userId, int friendId) {
+    public User deleteFriend(int userId, int friendId) {
         User user = getUser(userId);
         User friend = getUser(friendId);
         user.deleteFriend(friendId);
         friend.deleteFriend(userId);
+        return user;
     }
 
     @Override

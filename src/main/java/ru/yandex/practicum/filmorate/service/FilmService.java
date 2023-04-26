@@ -33,16 +33,16 @@ public class FilmService {
         return filmStorage.findAll();
     }
 
-    public void addLike(int filmId, int userId) {
-        filmStorage.addLike(filmId, userId);
+    public Film addLike(int filmId, int userId) {
+        return filmStorage.addLike(filmId, userId);
     }
 
     public Film findFilm(int id) {
         return filmStorage.getFilm(id);
     }
 
-    public void deleteLike(int filmId, int userId) {
-        filmStorage.deleteLike(filmId, userId);
+    public Film deleteLike(int filmId, int userId) {
+        return filmStorage.deleteLike(filmId, userId);
     }
 
     public List<Film> findPopularFilms(int count) {

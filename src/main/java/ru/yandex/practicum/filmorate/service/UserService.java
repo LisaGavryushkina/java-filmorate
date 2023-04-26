@@ -33,12 +33,12 @@ public class UserService {
         return userStorage.findAll();
     }
 
-    public void addFriend(int userId, int friendId) {
-        userStorage.addFriend(userId, friendId);
+    public User addFriend(int userId, int friendId) {
+        return userStorage.addFriend(userId, friendId);
     }
 
-    public void deleteFriend(int userId, int friendId) {
-        userStorage.deleteFriend(userId, friendId);
+    public User deleteFriend(int userId, int friendId) {
+        return userStorage.deleteFriend(userId, friendId);
     }
 
     public List<User> getAllFriends(int userId) {
