@@ -30,15 +30,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    public void clear() {
-        userService.clear();
-    }
-
     @PostMapping
     public User addUser(@Valid @RequestBody User user) {
-        User added = userService.addUser(user);
-        log.info("Добавлен новый пользователь: {}", user);
-        return added;
+        return userService.addUser(user);
     }
 
     @GetMapping("/{id}")

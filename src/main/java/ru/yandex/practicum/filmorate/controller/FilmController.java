@@ -31,10 +31,6 @@ public class FilmController {
         this.filmService = filmService;
     }
 
-    public void clear() {
-        filmService.clear();
-    }
-
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
         Film added = filmService.addFilm(film);
