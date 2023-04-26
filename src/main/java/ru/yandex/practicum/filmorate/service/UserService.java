@@ -30,30 +30,44 @@ public class UserService {
     }
 
     public User updateUser(User user) {
-        return userStorage.update(user);
+        User updated = userStorage.update(user);
+        log.info("Информация о пользователе обновлена: {}", user);
+        return updated;
     }
 
     public List<User> findAllUsers() {
-        return userStorage.findAll();
+        List<User> allUsers = userStorage.findAll();
+        log.info("Вернули всех пользователей: {}", allUsers);
+        return allUsers;
     }
 
     public User addFriend(int userId, int friendId) {
-        return userStorage.addFriend(userId, friendId);
+        User updated = userStorage.addFriend(userId, friendId);
+        log.info("Пользователь [{}] добавил в друзья пользователя [{}]", userId, friendId);
+        return updated;
     }
 
     public User deleteFriend(int userId, int friendId) {
-        return userStorage.deleteFriend(userId, friendId);
+        User updated = userStorage.deleteFriend(userId, friendId);
+        log.info("Пользователь [{}] удалил из друзей пользователя [{}]", userId, friendId);
+        return updated;
     }
 
     public List<User> getAllFriends(int userId) {
-        return userStorage.getAllFriends(userId);
+        List<User> friends = userStorage.getAllFriends(userId);
+        log.info("Вернули список друзей для пользователя [{}] : [{}]", userId, friends);
+        return friends;
     }
 
     public List<User> getAllCommonFriends(int userId, int otherId) {
-        return userStorage.getAllCommonFriends(userId, otherId);
+        List<User> commonFriends = userStorage.getAllCommonFriends(userId, otherId);
+        log.info("Вернули список общих друзей для пользователей [{}] и [{}]: {}", userId, otherId, commonFriends);
+        return commonFriends;
     }
 
     public User findUser(int id) {
-        return userStorage.getUser(id);
+        User user = userStorage.getUser(id);
+        log.info("Вернули пользователя [{}]", id);
+        return user;
     }
 }

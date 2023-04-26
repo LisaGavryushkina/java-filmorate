@@ -33,44 +33,43 @@ public class FilmController {
 
     @PostMapping
     public Film addFilm(@Valid @RequestBody Film film) {
-        Film added = filmService.addFilm(film);
-        log.info("Добавлен новый фильм: {}", added);
-        return added;
+        log.info("Запрос на добавление фильма: {}", film);
+        return filmService.addFilm(film);
     }
 
     @GetMapping("/{id}")
     public Film findFilm(@PathVariable int id) {
+        log.info("Запрос на получение фильма [{}]", id);
         return filmService.findFilm(id);
     }
 
     @PutMapping
     public Film updateFilm(@Valid @RequestBody Film film) {
-        Film updated = filmService.updateFilm(film);
-        log.info("Информация о фильме обновлена: {}", updated);
-        return updated;
+        log.info("Запрос на обновление фильма: {}", film);
+        return filmService.updateFilm(film);
     }
 
     @GetMapping
     public List<Film> findAllFilms() {
+        log.info("Запрос на получение списка всех фильмов");
         return filmService.findAllFilms();
     }
 
     @PutMapping("/{id}/like/{userId}")
     public Film addLike(@PathVariable int id, @PathVariable int userId) {
-        Film updated = filmService.addLike(id, userId);
-        log.info("Добавлен лайк фильму с id: {} от пользователя с id: {}", id, userId);
-        return updated;
+        log.info("Запрос на добавление лайка фильму [{}] от пользователя [{}]", id, userId);
+        return filmService.addLike(id, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
     public Film deleteLike(@PathVariable int id, @PathVariable int userId) {
-        Film updated = filmService.deleteLike(id, userId);
-        log.info("Удален лайк у фильма с id: {} от пользователя с id: {}", id, userId);
-        return updated;
+        log.info("Запрос на удаление лайка у фильма [{}] от пользователя [{}]", id, userId);
+        return filmService.deleteLike(id, userId);
     }
 
     @GetMapping("/popular")
     public List<Film> findPopularFilms(@RequestParam(defaultValue = "10") Integer count) {
+        log.info("Запрос на получение {} самых популярных фильмов", count);
         return filmService.findPopularFilms(count);
     }
 }

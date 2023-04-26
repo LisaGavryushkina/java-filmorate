@@ -27,9 +27,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 
 public class UserControllerTest {
-    private static final User USER1 = new User(1, "lizka@mail.ru", "lizka", "Liza", LocalDate.parse("1998-11-06"));
-    private static final User USER2 = new User(2, "rodivonum@mail.ru", "rodivonum", "Rodion", LocalDate.parse("1997" +
-            "-04-21"));
+    private static final User USER1 = new User(1, "lizka@mail.ru", "lizka", "Liza",
+            LocalDate.parse("1998-11-06"));
+    private static final User USER2 = new User(2, "rodivonum@mail.ru", "rodivonum", "Rodion",
+            LocalDate.parse("1997-04-21"));
 
     @Autowired
     private ObjectMapper objectMapper;

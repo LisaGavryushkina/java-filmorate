@@ -32,47 +32,49 @@ public class UserController {
 
     @PostMapping
     public User addUser(@Valid @RequestBody User user) {
+        log.info("Запрос на добавление пользователя: {}", user);
         return userService.addUser(user);
     }
 
     @GetMapping("/{id}")
     public User findUser(@PathVariable int id) {
+        log.info("Запрос на получение пользователя [{}]", id);
         return userService.findUser(id);
     }
 
     @PutMapping
     public User updateUser(@Valid @RequestBody User user) {
-        User updated = userService.updateUser(user);
-        log.info("Информация о пользователе обновлена: {}", user);
-        return updated;
+        log.info("Запрос на обновление пользователя: {}", user);
+        return userService.updateUser(user);
     }
 
     @GetMapping
     public List<User> findAllUsers() {
+        log.info("Запрос на получение всех пользователей");
         return userService.findAllUsers();
     }
 
     @PutMapping("/{id}/friends/{friendId}")
     public User addFriend(@PathVariable int id, @PathVariable int friendId) {
-        User updated = userService.addFriend(id, friendId);
-        log.info("Пользователь с id: {} добавил в друзья пользователя с id: {}", id, friendId);
-        return updated;
+        log.info("Запрос на добавление пользователя [{}] в друзья к пользователю [{}]", friendId, id);
+        return userService.addFriend(id, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
     public User deleteFriend(@PathVariable int id, @PathVariable int friendId) {
-        User updated = userService.deleteFriend(id, friendId);
-        log.info("Пользователь с id: {} удалил из друзей пользователя с id: {}", id, friendId);
-        return updated;
+        log.info("Запрос на удаление пользователя [{}] из друзей пользователя [{}]", friendId, id);
+        return userService.deleteFriend(id, friendId);
     }
 
     @GetMapping("/{id}/friends")
     public List<User> findAllFriends(@PathVariable int id) {
+        log.info("Запрос на получение списка всех друзей пользователя [{}]", id);
         return userService.getAllFriends(id);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
     public List<User> findAllCommonFriends(@PathVariable int id, @PathVariable int otherId) {
+        log.info("Запрос на получение списка общих друзей пользователя [{}] с пользователем [{}]", id, otherId);
         return userService.getAllCommonFriends(id, otherId);
     }
 }
