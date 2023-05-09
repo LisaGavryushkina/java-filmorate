@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -27,20 +27,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 
 public class UserControllerTest {
-    private static final User USER1 = new User(1, "lizka@mail.ru", "lizka", "Liza", LocalDate.parse("1998-11-06"));
-    private static final User USER2 = new User(2, "rodivonum@mail.ru", "rodivonum", "Rodion", LocalDate.parse("1997" +
-            "-04-21"));
+    private static final User USER1 = new User(1, "lizka@mail.ru", "lizka", "Liza",
+            LocalDate.parse("1998-11-06"));
+    private static final User USER2 = new User(2, "rodivonum@mail.ru", "rodivonum", "Rodion",
+            LocalDate.parse("1997-04-21"));
 
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private UserController controller;
+    private UserService userService;
     @Autowired
     private MockMvc mockMvc;
 
     @AfterEach
     public void clear() {
-        controller.clear();
+        userService.clear();
     }
 
     private static String getJson(String name) throws IOException {
@@ -53,8 +54,8 @@ public class UserControllerTest {
     @Test
     void whenGetUsers_thenStatus200andUsersReturned() throws Exception {
 
-        controller.addUser(USER1);
-        controller.addUser(USER2);
+        userService.addUser(USER1);
+        userService.addUser(USER2);
 
         this.mockMvc.perform(get("/users"))
                 .andExpect(status().isOk())
@@ -73,7 +74,7 @@ public class UserControllerTest {
 
     @Test
     void whenUpdateUser_thenStatus200andUserUpdated() throws Exception {
-        controller.addUser(USER1);
+        userService.addUser(USER1);
 
         this.mockMvc.perform(put("/users")
                         .content(getJson("/user/user_updated.json"))

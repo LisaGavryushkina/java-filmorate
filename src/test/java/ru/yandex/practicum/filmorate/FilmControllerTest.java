@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import ru.yandex.practicum.filmorate.controller.FilmController;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.service.FilmService;
 
 import static java.util.Objects.requireNonNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,13 +34,13 @@ public class FilmControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
-    private FilmController controller;
+    private FilmService filmService;
     @Autowired
     private MockMvc mockMvc;
 
     @AfterEach
     public void clear() {
-        controller.clear();
+        filmService.clear();
     }
 
     private static String getJson(String name) throws IOException {
@@ -53,8 +53,8 @@ public class FilmControllerTest {
     @Test
     void whenGetFilms_thenStatus200andFilmsReturned() throws Exception {
 
-        controller.addFilm(FILM_1);
-        controller.addFilm(FILM_2);
+        filmService.addFilm(FILM_1);
+        filmService.addFilm(FILM_2);
 
         this.mockMvc.perform(get("/films"))
                 .andExpect(status().isOk())
@@ -73,7 +73,7 @@ public class FilmControllerTest {
 
     @Test
     void whenUpdateFilm_thenStatus200andFilmUpdated() throws Exception {
-        controller.addFilm(FILM_1);
+        filmService.addFilm(FILM_1);
 
         this.mockMvc.perform(put("/films")
                         .content(getJson("/film/film_updated.json"))
