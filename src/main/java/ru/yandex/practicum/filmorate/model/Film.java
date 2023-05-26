@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.model;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
@@ -22,13 +23,17 @@ public class Film {
     private int id;
     @NotBlank(message = "Название не может быть пустым")
     private final String name;
+    @NonNull
+    private final RatingMpa mpa;
     @Size(max = 200, message = "Описание не может быть длиннее 200 символов")
     private final String description;
     @LocalDateConstraint(message = "Дата релиза не может быть раньше 28 декабря 1895 года")
     private final LocalDate releaseDate;
     @Positive(message = "Длительность фильма не может быть отрицательной")
     private final int duration;
-    private final Set<Integer> likes = new HashSet<>();
+    private final List<Genre> genres;
+    @Setter
+    private Set<Integer> likes = new HashSet<>();
 
     public void addLike(int userId) {
         likes.add(userId);

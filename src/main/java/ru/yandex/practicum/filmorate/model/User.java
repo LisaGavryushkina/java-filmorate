@@ -1,8 +1,8 @@
 package ru.yandex.practicum.filmorate.model;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.PastOrPresent;
@@ -13,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import one.util.streamex.EntryStream;
 import org.springframework.lang.Nullable;
 
 @ToString
@@ -30,7 +31,8 @@ public class User {
     private String name;
     @PastOrPresent(message = "Дата рождения не может быть в будущем")
     private final LocalDate birthday;
-    private final Set<Integer> friends;
+    @Setter
+    private List<Integer> friends;
 
     public User(int id, String email, String login, String name, LocalDate birthday) {
         this.id = id;
@@ -42,7 +44,7 @@ public class User {
             this.name = name;
         }
         this.birthday = birthday;
-        this.friends = new HashSet<>();
+        this.friends = new ArrayList<>();
     }
 
     public void addFriend(int id) {
@@ -54,7 +56,7 @@ public class User {
     }
 
     @JsonIgnore
-    public Set<Integer> getAllFriends() {
-        return new HashSet<>(friends);
+    public List<Integer> getAllFriends() {
+        return new ArrayList<>(friends);
     }
 }

@@ -5,15 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import org.springframework.stereotype.Component;
 
 import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.model.User;
 
-@Component
+
 public class InMemoryUserStorage implements UserStorage {
 
     private final Map<Integer, User> users = new HashMap<>();
@@ -23,14 +20,12 @@ public class InMemoryUserStorage implements UserStorage {
         return ++id;
     }
 
-
     @Override
     public User add(User user) {
         user.setId(createId());
         users.put(user.getId(), user);
         return user;
     }
-
 
     @Override
     public User update(User user) {
@@ -62,7 +57,6 @@ public class InMemoryUserStorage implements UserStorage {
         User user = getUser(userId);
         User friend = getUser(friendId);
         user.addFriend(friendId);
-        friend.addFriend(userId);
         return user;
     }
 
@@ -71,13 +65,12 @@ public class InMemoryUserStorage implements UserStorage {
         User user = getUser(userId);
         User friend = getUser(friendId);
         user.deleteFriend(friendId);
-        friend.deleteFriend(userId);
         return user;
     }
 
     @Override
     public List<User> getAllFriends(int userId) {
-        Set<Integer> userFriends = getUser(userId).getAllFriends();
+        List<Integer> userFriends = getUser(userId).getAllFriends();
 
         return userFriends.stream()
                 .map(users::get)
@@ -86,8 +79,8 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public List<User> getAllCommonFriends(int userId, int otherId) {
-        Set<Integer> userFriends = getUser(userId).getAllFriends();
-        Set<Integer> otherUserFriends = getUser(otherId).getAllFriends();
+        List<Integer> userFriends = getUser(userId).getAllFriends();
+        List<Integer> otherUserFriends = getUser(otherId).getAllFriends();
 
         return userFriends.stream()
                 .filter(otherUserFriends::contains)

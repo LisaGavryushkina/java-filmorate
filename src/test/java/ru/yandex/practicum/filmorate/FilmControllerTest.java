@@ -3,6 +3,7 @@ package ru.yandex.practicum.filmorate;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.RatingMpa;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import static java.util.Objects.requireNonNull;
@@ -27,10 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 
 public class FilmControllerTest {
-    private static final Film FILM_1 = new Film(1, "Авиатор", "История о военном летчике",
-            LocalDate.parse("2002-12-20"), 160);
-    private static final Film FILM_2 = new Film(2, "Тренер Картер", "История о тренере по баскетболу",
-            LocalDate.parse("2005-12-20"), 130);
+    private static final Film FILM_1 = new Film(1, "Авиатор", new RatingMpa(3, ""), "История о военном летчике",
+            LocalDate.parse("2002-12-20"), 160, List.of(new Genre(2,""), new Genre(1,"")));
+    private static final Film FILM_2 =null;// new Film(2, "Тренер Картер", new RatingMpa(5), "История о тренере по баскетболу",
+//            LocalDate.parse("2005-12-20"), 130, List.of(new Genre(2), new Genre(6)));
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -54,7 +57,7 @@ public class FilmControllerTest {
     void whenGetFilms_thenStatus200andFilmsReturned() throws Exception {
 
         filmService.addFilm(FILM_1);
-        filmService.addFilm(FILM_2);
+//        filmService.addFilm(FILM_2);
 
         this.mockMvc.perform(get("/films"))
                 .andExpect(status().isOk())

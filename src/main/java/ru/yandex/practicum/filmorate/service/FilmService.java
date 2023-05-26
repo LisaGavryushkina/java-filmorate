@@ -4,18 +4,22 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.RatingMpa;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
 @Service
 @Slf4j
 public class FilmService {
+
     private final FilmStorage filmStorage;
 
     @Autowired
-    public FilmService(FilmStorage filmStorage) {
+    public FilmService(@Qualifier("filmDbStorage") FilmStorage filmStorage) {
         this.filmStorage = filmStorage;
     }
 
@@ -63,5 +67,29 @@ public class FilmService {
         List<Film> popularFilms = filmStorage.findPopularFilms(count);
         log.info("Вернули {} самых популярных фильмов: {}", count, popularFilms);
         return popularFilms;
+    }
+
+    public List<Genre> findAllGenres() {
+        List<Genre> genres = filmStorage.findAllGenres();
+        log.info("Вернули список всех жанров: {}", genres);
+        return genres;
+    }
+
+    public Genre findGenre(int genreId) {
+        Genre genre = filmStorage.findGenreById(genreId);
+        log.info("Вернули жанр [{}] : [{}]", genreId, genre);
+        return genre;
+    }
+
+    public List<RatingMpa> findAllRatingMpa() {
+        List<RatingMpa> ratings = filmStorage.findAllRatingMpa();
+        log.info("Вернули список всех рейтингов MPA: {}", ratings);
+        return ratings;
+    }
+
+    public RatingMpa findRatingMpa(int ratingMpaId) {
+        RatingMpa mpa = filmStorage.findRatingMpaById(ratingMpaId);
+        log.info("Вернули рейтинг MPA [{}] : [{}]", ratingMpaId, mpa);
+        return mpa;
     }
 }
