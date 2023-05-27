@@ -23,10 +23,6 @@ public class FilmService {
         this.filmStorage = filmStorage;
     }
 
-    public void clear() {
-        filmStorage.clear();
-    }
-
     public Film addFilm(Film film) {
         Film added = filmStorage.add(film);
         log.info("Добавлен новый фильм: {}", added);

@@ -44,12 +44,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public void clear() {
-        films.clear();
-        id = 0;
-    }
-
-    @Override
     public Film getFilm(int id) {
         return Optional.ofNullable(films.get(id)).orElseThrow(() -> new FilmNotFoundException(id));
     }

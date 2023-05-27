@@ -2,7 +2,6 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 import lombok.NonNull;
-import lombok.Setter;
 import org.springframework.lang.Nullable;
 
 @Data

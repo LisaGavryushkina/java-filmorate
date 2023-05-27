@@ -12,8 +12,6 @@ public interface UserStorage {
 
     List<User> findAll();
 
-    void clear();
-
     User getUser(int id);
 
     List<User> getAllFriends(int userId);

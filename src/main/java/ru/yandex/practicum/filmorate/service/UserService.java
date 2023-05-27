@@ -20,10 +20,6 @@ public class UserService {
         this.userStorage = userStorage;
     }
 
-    public void clear() {
-        userStorage.clear();
-    }
-
     public User addUser(User user) {
         User added = userStorage.add(user);
         log.info("Добавлен новый пользователь: {}", added);

@@ -92,11 +92,12 @@ public class FilmDbStorage implements FilmStorage {
         return getFilm(filmId);
     }
 
-    private void updateFilmGenres(Film film) {
-        jdbcTemplate.update("delete from film_genre where film_id = ?", film.getId());
-        for (Genre genre : film.getGenres()) {
-            addGenre(film.getId(), genre.getId());
-        }
+    private void updateFilmGenres(int filmId, List<Genre> genres) {
+        jdbcTemplate.update("delete from film_genre where film_id = ?", filmId);
+        genres.stream()
+                .map(Genre::getId)
+                .distinct()
+                .forEach(genreId -> addGenre(filmId, genreId));
     }
 
     @Override
@@ -118,13 +119,14 @@ public class FilmDbStorage implements FilmStorage {
         int filmId = Objects.requireNonNull(keyHolder.getKey()).intValue();
 
         if (film.getGenres() != null) {
-            updateFilmGenres(film);
+            updateFilmGenres(filmId, film.getGenres());
         }
         return getFilm(filmId);
     }
 
     @Override
     public Film update(Film film) {
+        getFilm(film.getId());
         String sqlQuery = "update film set name = ?, rating_id = ?, description = ?, release_date = ?, duration = ? " +
                 "where film_id = ?";
 
@@ -137,7 +139,7 @@ public class FilmDbStorage implements FilmStorage {
                 film.getId());
 
         if (film.getGenres() != null) {
-            updateFilmGenres(film);
+            updateFilmGenres(film.getId(), film.getGenres());
         }
         return getFilm(film.getId());
     }
@@ -146,12 +148,6 @@ public class FilmDbStorage implements FilmStorage {
     public List<Film> findAll() {
         String sqlQuery = "select * from film";
         return jdbcTemplate.query(sqlQuery, (resultSet, rowNum) -> mapRowToFilm(resultSet));
-    }
-
-    @Override
-    public void clear() {
-        String sqlQuery = "delete from film";
-        jdbcTemplate.update(sqlQuery);
     }
 
     @Override

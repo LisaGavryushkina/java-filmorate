@@ -42,12 +42,6 @@ public class InMemoryUserStorage implements UserStorage {
     }
 
     @Override
-    public void clear() {
-        users.clear();
-        id = 0;
-    }
-
-    @Override
     public User getUser(int id) {
         return Optional.ofNullable(users.get(id)).orElseThrow(() -> new UserNotFoundException(id));
     }

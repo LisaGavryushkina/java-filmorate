@@ -74,6 +74,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User update(User user) {
+        getUser(user.getId());
         String sqlQuery = "update user_ set email = ?, login = ?, name = ?, birthday = ? where user_id = ?";
 
         jdbcTemplate.update(sqlQuery,
@@ -90,12 +91,6 @@ public class UserDbStorage implements UserStorage {
     public List<User> findAll() {
         String sqlQuery = "select * from user_";
         return jdbcTemplate.query(sqlQuery, (resultSet, rowNum) -> mapRowToUser(resultSet));
-    }
-
-    @Override
-    public void clear() {
-        String sqlQuery = "delete from user_";
-        jdbcTemplate.update(sqlQuery);
     }
 
     @Override
@@ -118,6 +113,8 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public List<User> getAllCommonFriends(int userId, int otherId) {
+        getUser(userId);
+        getUser(otherId);
         List<Integer> userFriends = getIdAllFriends(userId);
         List<Integer> otherFriends = getIdAllFriends(otherId);
 
@@ -140,6 +137,9 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User deleteFriend(int userId, int friendId) {
+        if (!getIdAllFriends(userId).contains(friendId)) {
+            throw new UserNotFoundException(friendId);
+        }
         String sqlQuery = "delete from friendship_request where user_from_id = ? and " +
                 "user_to_id = ?";
         jdbcTemplate.update(sqlQuery, userId, friendId);

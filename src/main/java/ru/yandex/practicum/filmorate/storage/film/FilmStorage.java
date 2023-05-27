@@ -14,8 +14,6 @@ public interface FilmStorage {
 
     List<Film> findAll();
 
-    void clear();
-
     Film getFilm(int id);
 
     List<Film> findPopularFilms(int count);
