@@ -28,10 +28,9 @@ public class UserDbStorage implements UserStorage {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    private boolean isUserExisting(User user) {
-        User existingUser = DataAccessUtils.singleResult(jdbcTemplate.query("select * from user_ where email = ?",
-                (resultSet, rowNum) -> mapRowToUser(resultSet), user.getEmail()));
-        return existingUser != null;
+    private boolean isUserExist(User user) {
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject("select exists (select 1 from user_ " +
+                "where email = ?)", Boolean.class, user.getEmail()));
     }
 
     private User mapRowToUser(ResultSet resultSet) throws SQLException {
@@ -53,7 +52,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User add(User user) {
-        if (isUserExisting(user)) {
+        if (isUserExist(user)) {
             return getUser(user.getId());
         }
         String sqlQuery = "insert into user_ (email, login, name, birthday) values (?, ?, ?, ?)";

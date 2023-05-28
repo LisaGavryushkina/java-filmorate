@@ -35,9 +35,8 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     private boolean isFilmExisting(Film film) {
-        Film existingFilm = DataAccessUtils.singleResult(jdbcTemplate.query("select * from film where film_id = ?",
-                (resultSet, rowNum) -> mapRowToFilm(resultSet), film.getId()));
-        return existingFilm != null;
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject("select exists (select 1 from film " +
+                "where film_id = ?)", Boolean.class, film.getId()));
     }
 
     private Film mapRowToFilm(ResultSet resultSet) throws SQLException {
@@ -86,10 +85,10 @@ public class FilmDbStorage implements FilmStorage {
         return new HashSet<>(jdbcTemplate.queryForList(sqlQuery, Integer.class, filmId));
     }
 
-    private Film addGenre(int filmId, int genreId) {
+    private void addGenre(int filmId, int genreId) {
         String sqlQuery = "insert into film_genre (film_id, genre_id) values (?, ?)";
         jdbcTemplate.update(sqlQuery, filmId, genreId);
-        return getFilm(filmId);
+        getFilm(filmId);
     }
 
     private void updateFilmGenres(int filmId, List<Genre> genres) {
