@@ -1,8 +1,11 @@
 {
-    "id": 200,
-    "name": "Авиатор",
-    "description": "История о военном летчике",
-    "releaseDate": "2002-12-20",
-    "duration": 160,
-    "likes": []
+    "id": 9999,
+    "name": "nisi eiusmod",
+    "mpa": {
+        "id": 3
+    },
+    "description": "adipisicing",
+    "releaseDate": "1990-03-25",
+    "duration": 100,
+    "genres": []
 }

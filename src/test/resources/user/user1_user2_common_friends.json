@@ -1,0 +1,10 @@
+[
+    {
+        "id": %d,
+        "email": "malena@mail.ru",
+        "login": "malenka",
+        "name": "Alyona",
+        "birthday": "1999-10-10",
+        "friends": []
+    }
+]

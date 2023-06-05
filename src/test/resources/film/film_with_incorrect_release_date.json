@@ -1,7 +1,9 @@
 {
     "name": "Авиатор",
-    "description": "История о военном летчике",
+    "mpa": {
+        "id": 3
+    },
+    "description": "История о крушении самолета",
     "releaseDate": "1880-12-20",
-    "duration": 160,
-    "likes": []
+    "duration": 160
 }

@@ -8,12 +8,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.stereotype.Component;
-
 import ru.yandex.practicum.filmorate.exception.FilmNotFoundException;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.RatingMpa;
 
-@Component
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
     private int id;
@@ -29,7 +28,6 @@ public class InMemoryFilmStorage implements FilmStorage {
         return film;
     }
 
-
     @Override
     public Film update(Film film) {
         int filmId = film.getId();
@@ -43,12 +41,6 @@ public class InMemoryFilmStorage implements FilmStorage {
     @Override
     public List<Film> findAll() {
         return new ArrayList<>(films.values());
-    }
-
-    @Override
-    public void clear() {
-        films.clear();
-        id = 0;
     }
 
     @Override
@@ -79,5 +71,25 @@ public class InMemoryFilmStorage implements FilmStorage {
         Film film = getFilm(filmId);
         film.deleteLike(userId);
         return film;
+    }
+
+    @Override
+    public List<Genre> findAllGenres() {
+        return null;
+    }
+
+    @Override
+    public Genre findGenreById(int genreId) {
+        return null;
+    }
+
+    @Override
+    public List<RatingMpa> findAllRatingMpa() {
+        return null;
+    }
+
+    @Override
+    public RatingMpa findRatingMpaById(int ratingMpaId) {
+        return null;
     }
 }

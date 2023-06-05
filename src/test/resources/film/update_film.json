@@ -1,14 +1,15 @@
 {
-    "name": "",
+    "id": %d,
+    "name": "Авиатор",
     "mpa": {
         "id": 3
     },
-    "description": "История о военном летчике",
+    "description": "История о крушении самолета",
     "releaseDate": "2002-12-20",
     "duration": 160,
     "genres": [
         {
-            "id": 1
+            "id": 3
         },
         {
             "id": 2
